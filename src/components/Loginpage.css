@@ -1,0 +1,60 @@
+body{
+    background-color: #f1f1f1 ;
+}
+
+.main-container-lg{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center; /* กึ่งกลางแนวนอน */
+    align-items: center;     /* กึ่งกลางแนวตั้ง */
+}
+
+.title-login{
+    margin-top: 50px;
+}
+
+.title-login img{
+    background-color: rgba(212, 116, 64, 0.947);
+    width: 40px;
+    padding: 10px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+}
+
+.title-login p{
+    color: #787878;
+}
+
+.container-login{
+    width: 300px;
+    height: 400px;
+    background-color: white ;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 25px;
+    box-shadow: 1px 10px 20px 5px #d8d2d2;
+}
+
+.title-login{
+    text-align: center;
+    padding: 30px 0px 20px 0px;
+}
+
+.signIn-Up{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px 10px;
+}
+
+.login-btn,
+.signup-btn {
+  width: 160px;
+  height: 45px;
+  border: none;
+  border-radius: 15px;
+  background: #00685e;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 4px 0px;
+}
