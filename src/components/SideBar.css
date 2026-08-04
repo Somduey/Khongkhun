@@ -1,0 +1,89 @@
+.maincontainer-sideL {
+  height: 100vh;
+  width: 300px;
+  background-color: #00685e;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: default;
+  position: relative;
+}
+
+.title-sideL img{
+    background-color: rgba(212, 116, 64, 0.947);
+    width: 50px;
+    padding: 10px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    margin: 25px 0px 20px 0px;
+    transition: all 0.3s ease-in-out;
+}
+
+.title-sideL img:hover{
+    transform: scale(1.1) rotate(-10deg);
+}
+
+.title-sideL{
+    width: 250px;
+    border-bottom: 1px solid rgb(145, 145, 145);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px auto;
+    padding: 10px;
+    gap: 10px;
+}
+
+.title-sideL h1{
+    color: white;
+    font-size: 30px;
+}
+
+.title-sideL p{
+    color: rgb(201, 201, 201);
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.menu-container{
+    width: 250px;
+    margin: 15px auto;
+}
+
+.menu-container p{
+    color: rgb(201, 201, 201);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.menu-container ul{
+    list-style: none;
+    padding: 0px;
+}
+
+.menu-container li{
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px 0px;
+    background-color: white;
+    color: #00685e;
+    box-shadow: 1px 1px 10px 1px rgb(30, 61, 52);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+}
+
+.menu-container li:hover{
+    background-color: #cacaca;
+    color: #070b0b;
+}
+
+.bottom-menu{
+    background-color: red;
+    width: 250px;
+}
+
+.profile{
+    position: absolute;
+    width: 250px;
+    left: 25px;
+    bottom: 10px;
+}

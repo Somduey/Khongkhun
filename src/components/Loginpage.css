@@ -2,6 +2,32 @@ body{
     background-color: #f1f1f1 ;
 }
 
+/* decorative floating icons */
+  .deco{position:absolute;color:#cdd8cf;opacity:.55;pointer-events:none;z-index:0;}
+  .deco svg{stroke:currentColor;fill:none;}
+  .deco-house{top:118px;left:300px;width:52px;height:52px;stroke-width:1.5;color:#9fc2b7;}
+  .deco-bag{top:150px;right:400px;width:46px;height:46px;color:#e6b877;stroke-width:1.5;}
+  .deco-square{bottom:120px;right:350px;width:46px;height:46px;color:#e6b877;stroke-width:1.5;transform:rotate(12deg);}
+  .deco-circle{bottom:70px;left:70px;width:30px;height:30px;border:3px solid #9fc2b7;border-radius:50%;}
+
+.deco-circle2{
+    top: 300px;
+    right: 150px;
+    width: 30px;
+    height: 30px;
+    border: 3px solid #9fc2b7;
+    border-radius: 50%;
+}
+
+.deco-bag2{
+    bottom: 200px;
+    left: 200px;
+    width: 46px;
+    height: 46px;
+    color: #e6b877;
+    stroke-width: 1.5;
+}
+
 .main-container-lg{
     min-height: 100vh;
     display: flex;
