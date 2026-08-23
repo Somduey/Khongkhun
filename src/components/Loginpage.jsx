@@ -1,16 +1,36 @@
 import "./Loginpage.css";
 import Home from "../assets/home.svg";
-import { Show, SignInButton, SignUpButton, useUser } from "@clerk/react";
-import { Navigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { signIn } from "../services/firebase";
 
 export default function Loginpage() {
-  const { isSignedIn, isLoaded } = useUser();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  if (!isLoaded) return null; // กันกระพริบระหว่างเช็คสถานะ
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    setError("");
 
-  if (isSignedIn) {
-    return <Navigate to="/test" replace />;
-  }
+    if (!email.trim() || !password) {
+      setError("กรุณากรอกข้อมูล");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await signIn(email, password);
+      navigate("/Home", { replace: true });
+    } catch (authError) {
+      console.error(authError);
+      setError("อีเมลหรือรหัสผ่านไม่ถูกต้อง");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -68,16 +88,29 @@ export default function Loginpage() {
             <h1>KhongKhun</h1>
             <p>เข้าสู่ระบบตามหาของหาย</p>
           </div>
-          <div className="signIn-Up">
-            <Show when="signed-out">
-              <SignInButton asChild forceRedirectUrl="/test">
-                <button className="login-btn">เข้าสู่ระบบ</button>
-              </SignInButton>
-              <SignUpButton asChild forceRedirectUrl="/test">
-                <button className="signup-btn">สมัครสมาชิก</button>
-              </SignUpButton>
-            </Show>
-          </div>
+          <form className="signIn-Up" onSubmit={handleLogin}>
+            <div className="usn-psw">
+              <div className="username">
+                <label htmlFor="email">อีเมล</label>
+                <input id="email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
+              </div>
+              <div className="password">
+                <label htmlFor="psw">รหัสผ่าน</label>
+                <input id="psw" type="password" value={password} onChange={(event) => setPassword(event.target.value)} required minLength={6} />
+              </div>
+            </div>
+
+            {/* ปุ่มเข้าสู่ระบบ && ปุ่มสมัครสมาชิก */}
+            <div className="btn-signIn-Up">
+              <button className="login" type="submit" disabled={loading}>
+                {loading ? "กำลังดำเนินการ..." : "เข้าสู่ระบบ"}
+              </button>
+              <button className="signup" type="button" disabled={loading} onClick={() => navigate("/register")}>
+                สมัครสมาชิก
+              </button>
+            </div>
+            {error && <p role="alert">{error}</p>}
+          </form>
         </div>
       </div>
     </>

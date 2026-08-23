@@ -1,8 +1,33 @@
 import "./SideBar.css";
 import Home from "../assets/home.svg";
-import { UserButton } from "@clerk/react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { logOut } from "../services/firebase.js";
+import cog from "../assets/cog.svg";
 
 export default function SideBar() {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState(false);
+  const [confirm,setConfirm] = useState(false)
+
+  const handleSignOut = async () => {
+    try {
+      setLoading(true);
+      await logOut();
+      navigate("/", { replace: true });
+    } catch (err) {
+      console.error("Sign out failed", err);
+      alert("ออกจากระบบไม่สำเร็จ");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  function toggleValue(){
+    setShow(!show)
+  }
+
   return (
     <aside className="maincontainer-sideL">
       <div className="title-sideL">
@@ -18,20 +43,18 @@ export default function SideBar() {
           <li className="menu">โพสต์</li>
         </ul>
       </div>
-      <div className="profile">
-        <UserButton
-          afterSignOutUrl="/"
-          appearance={{
-            elements: {
-              avatarBox: {
-                width: "40px",
-                height: "40px",
-                boxShadow: "0px 0px 5px 1px rgb(30, 61, 52)",
-              },
-            },
-          }}
-        />
-      </div>
+      <button className="option" onClick={toggleValue}>
+        <img src={cog} alt="" />
+      </button>
+
+      {/* เพิ่มเติม */}
+      {show && (
+        <div className="sign-out-Ac">
+          <button type="button" onClick={handleSignOut} disabled={loading}>
+            {loading ? "กำลังออก..." : "ออกจากระบบ"}
+          </button>
+        </div>
+      )}
     </aside>
   );
 }

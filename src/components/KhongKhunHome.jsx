@@ -1,9 +1,9 @@
-import SideBar from "./SideBar.jsx"
+import SideBar from "./SideBar.jsx";
 
-export default function KhongKhunHome(){
-  return(
+export default function KhongKhunHome() {
+  return (
     <div>
-        <SideBar />
+      <SideBar />
     </div>
-  )
+  );
 }

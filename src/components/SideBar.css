@@ -87,3 +87,37 @@
     left: 25px;
     bottom: 10px;
 }
+
+.option{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: none;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.option>img{
+    width: 20px;
+    filter: brightness(0) invert(1);
+}
+
+.sign-out-Ac{
+    width: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 15px;
+    right: 50px;
+}
+
+.sign-out-Ac>button{
+    padding: 10px 15px;
+    background-color: rgb(222, 62, 62);
+    color: white;
+    border: none;
+    border-radius: 15px;
+}

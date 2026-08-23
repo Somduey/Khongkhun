@@ -33,10 +33,8 @@ body{
     display: flex;
     justify-content: center; /* กึ่งกลางแนวนอน */
     align-items: center;     /* กึ่งกลางแนวตั้ง */
-}
-
-.title-login{
-    margin-top: 50px;
+    position: relative;
+    z-index: 99;
 }
 
 .title-login img{
@@ -53,16 +51,22 @@ body{
 
 .container-login{
     width: 300px;
-    height: 400px;
+    height: 430px;
     background-color: white ;
     font-family: Arial, Helvetica, sans-serif;
     border-radius: 25px;
     box-shadow: 1px 10px 20px 5px #d8d2d2;
 }
 
+.register-page{
+    height: auto;
+    min-height: 450px;
+}
+
 .title-login{
     text-align: center;
     padding: 30px 0px 20px 0px;
+    cursor: default;
 }
 
 .signIn-Up{
@@ -72,15 +76,152 @@ body{
     padding: 0px 10px;
 }
 
-.login-btn,
-.signup-btn {
-  width: 160px;
-  height: 45px;
-  border: none;
-  border-radius: 15px;
-  background: #00685e;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  margin: 4px 0px;
+.usn-psw .username{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.usn-psw .username>label{
+    font-size: small;
+    font-weight: 600;
+    color: #787878;
+}
+
+.usn-psw .username>input{
+    border: none;
+    background-color: #f2f0f0;
+    box-shadow: 2px 5px 10px 1px #c6c6c6;
+    border-radius: 7px;
+    height: 25px;
+    padding: 0px 10px;
+
+}
+
+.usn-psw .username>input:focus{
+    outline: none;
+}
+
+.usn-psw .password{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.usn-psw .password>label{
+    font-size: small;
+    font-weight: 600;
+    color: #787878;
+}
+
+.usn-psw .password>input{
+    border: none;
+    background-color: #f2f0f0;
+    box-shadow: 2px 5px 10px 1px #c6c6c6;
+    border-radius: 7px;
+    height: 25px;
+    padding: 0px 10px;
+}
+
+.usn-psw .password>input:focus{
+    outline: none;
+}
+
+.usn-psw{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-signIn-Up{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-signIn-Up .login{
+    border: none;
+    padding: 10px 15px;
+    background-color: #00685e;
+    color: white;
+    box-shadow: 1px 1px 5px 1px  rgb(130, 130, 130);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-signIn-Up .signup{
+    border: none;
+    padding: 10px 15px;
+    background-color: white;
+    box-shadow: 1px 1px 5px 1px  rgb(130, 130, 130);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-signIn-Up .login:hover{
+    background-color: #015048;
+    transform: scale(1.05);
+}
+
+.btn-signIn-Up .signup:hover{
+    transform: scale(1.05);
+}
+
+.btn-signIn-Up button:disabled{
+    cursor: not-allowed;
+    opacity: .65;
+}
+
+[role="alert"]{
+    color: #b42318;
+    font-size: 13px;
+    text-align: center;
+    margin: 12px 0 0;
+}
+
+.google-signin{
+    padding: 10px 15px;
+    background-color: white;
+    border: none;
+    box-shadow: 1px 1px 10px 1px rgb(183, 182, 182);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.google-signin:hover{
+    transform: scale(1.02);
+}
+
+.google-signin>img{
+    width: 20px;
+}
+
+.register-page{
+    height: 540px;
+}
+
+.divider{
+    margin: 10px 0px;
+}
+
+.google{
+    padding: 10px 15px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.google>img{
+    width: 20px;
 }
