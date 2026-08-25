@@ -1,8 +1,9 @@
 import "./Loginpage.css";
 import Home from "../assets/home.svg";
+import google from "../assets/google.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signIn } from "../services/firebase";
+import { signIn, signInWithGoogle } from "../services/firebase";
 
 export default function Loginpage() {
   const [email, setEmail] = useState("");
@@ -11,22 +12,15 @@ export default function Loginpage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async (event) => {
-    event.preventDefault();
+  const handleGoogleLogin = async () => {
     setError("");
-
-    if (!email.trim() || !password) {
-      setError("กรุณากรอกข้อมูล");
-      return;
-    }
-
     setLoading(true);
     try {
-      await signIn(email, password);
+      await signInWithGoogle();
       navigate("/Home", { replace: true });
     } catch (authError) {
       console.error(authError);
-      setError("อีเมลหรือรหัสผ่านไม่ถูกต้อง");
+      setError("ไม่สามารถสมัครด้วย Google ได้");
     } finally {
       setLoading(false);
     }
@@ -88,29 +82,13 @@ export default function Loginpage() {
             <h1>KhongKhun</h1>
             <p>เข้าสู่ระบบตามหาของหาย</p>
           </div>
-          <form className="signIn-Up" onSubmit={handleLogin}>
-            <div className="usn-psw">
-              <div className="username">
-                <label htmlFor="email">อีเมล</label>
-                <input id="email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
-              </div>
-              <div className="password">
-                <label htmlFor="psw">รหัสผ่าน</label>
-                <input id="psw" type="password" value={password} onChange={(event) => setPassword(event.target.value)} required minLength={6} />
-              </div>
-            </div>
 
-            {/* ปุ่มเข้าสู่ระบบ && ปุ่มสมัครสมาชิก */}
-            <div className="btn-signIn-Up">
-              <button className="login" type="submit" disabled={loading}>
-                {loading ? "กำลังดำเนินการ..." : "เข้าสู่ระบบ"}
-              </button>
-              <button className="signup" type="button" disabled={loading} onClick={() => navigate("/register")}>
-                สมัครสมาชิก
-              </button>
-            </div>
-            {error && <p role="alert">{error}</p>}
-          </form>
+          <div className="btn-signIn-Up">
+            <button className="google" type="button" disabled={loading} onClick={handleGoogleLogin}>
+              สมัครด้วย <img src={google} alt="Google" />
+            </button>
+          </div>
+          {error && <p role="alert">{error}</p>}
         </div>
       </div>
     </>

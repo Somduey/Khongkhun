@@ -51,21 +51,16 @@ body{
 
 .container-login{
     width: 300px;
-    height: 430px;
+    height: 280px;
     background-color: white ;
     font-family: Arial, Helvetica, sans-serif;
     border-radius: 25px;
     box-shadow: 1px 10px 20px 5px #d8d2d2;
 }
 
-.register-page{
-    height: auto;
-    min-height: 450px;
-}
-
 .title-login{
     text-align: center;
-    padding: 30px 0px 20px 0px;
+    padding: 30px 0px 10px 0px;
     cursor: default;
 }
 
@@ -203,10 +198,6 @@ body{
     width: 20px;
 }
 
-.register-page{
-    height: 540px;
-}
-
 .divider{
     margin: 10px 0px;
 }
@@ -224,4 +215,28 @@ body{
 
 .google>img{
     width: 20px;
+}
+
+.btn-signIn-Up{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-signIn-Up>button{
+    width:200px;
+    padding: 10px 15px;
+    background-color: white;
+    border: none;
+    box-shadow: 1px 1px 10px 1px rgb(183, 182, 182);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-signIn-Up>button:hover{
+    transform: scale(1.02);
 }
