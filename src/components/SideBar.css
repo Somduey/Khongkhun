@@ -121,3 +121,20 @@
     border: none;
     border-radius: 15px;
 }
+
+.post{
+    background-color: blue;
+    position: absolute;
+    top: 60px;
+    left: 600px;
+    width: 600px;
+    height: 600px;
+    border-radius: 25px;
+    border: 1px solid black;
+}
+
+.headText{     
+    font-size: 35px;
+    margin-top: 40px;
+    text-align: center;
+}

@@ -9,7 +9,7 @@ export default function SideBar() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
-  const [confirm,setConfirm] = useState(false)
+  const [showPost,setshowPost] = useState(false)
 
   const handleSignOut = async () => {
     try {
@@ -28,6 +28,10 @@ export default function SideBar() {
     setShow(!show)
   }
 
+  function showPostitem(){
+    setshowPost(!showPost)
+  }
+
   return (
     <aside className="maincontainer-sideL">
       <div className="title-sideL">
@@ -40,7 +44,7 @@ export default function SideBar() {
       <div className="menu-container">
         <p>เมนูหลัก</p>
         <ul>
-          <li className="menu">โพสต์</li>
+          <li className="menu" onClick={showPostitem}>โพสต์</li>
         </ul>
       </div>
       <button className="option" onClick={toggleValue}>
@@ -53,6 +57,12 @@ export default function SideBar() {
           <button type="button" onClick={handleSignOut} disabled={loading}>
             {loading ? "กำลังออก..." : "ออกจากระบบ"}
           </button>
+        </div>
+      )}
+      
+      {showPost && (
+        <div className="post">
+          <h1 className="headText">โพสต์ของหาย</h1>
         </div>
       )}
     </aside>
