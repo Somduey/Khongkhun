@@ -2,7 +2,7 @@
   height: 100dvh;
   width: 300px;
   background-color: #00685e;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: inherit;
   cursor: default;
   position: relative;
 }
@@ -35,6 +35,7 @@
 .title-sideL h1{
     color: white;
     font-size: 30px;
+    font-weight:600;
 }
 
 .title-sideL p{
@@ -289,7 +290,7 @@
     border: 2px solid #00685e;
     border-radius: 10px;
     font-size: 14px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: inherit;
     resize: vertical;
     min-height: 100px;
 }

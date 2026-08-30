@@ -142,11 +142,13 @@
 .post-type-lost {
   background: #ffddd8;
   color: #9b1c1c;
+  box-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
 }
 
 .post-type-search {
   background: #d7edff;
   color: #075985;
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
 }
 
 .delete-post-button {
@@ -160,6 +162,11 @@
   font-size: 12px;
   font-weight: 700;
   white-space: nowrap;
+  transition: all 0.3s;
+}
+
+.delete-post-button:hover{
+  transform: scale(1.02);
 }
 
 .delete-post-button:disabled {
@@ -201,6 +208,7 @@
   cursor: pointer;
   font: inherit;
   font-weight: 700;
+  transition: all 0.5s;
 }
 
 .comments-trigger:hover {
