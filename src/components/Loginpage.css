@@ -240,3 +240,56 @@ body{
 .btn-signIn-Up>button:hover{
     transform: scale(1.02);
 }
+
+.in-app-browser-notice-backdrop {
+    position: fixed;
+    z-index: 100;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.in-app-browser-notice {
+    width: min(400px, 100%);
+    padding: 28px;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.in-app-browser-notice h2 {
+    color: #00685e;
+    font-size: 22px;
+}
+
+.in-app-browser-notice p {
+    margin: 12px 0 20px;
+    color: #5d6b68;
+    line-height: 1.6;
+}
+
+.in-app-browser-notice button {
+    width: 100%;
+    padding: 10px 14px;
+    border: 0;
+    border-radius: 10px;
+    background: #00685e;
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+}
+
+.in-app-browser-notice .copy-status {
+    margin: 10px 0 0;
+    color: #00685e;
+    font-size: 13px;
+}
+
+.in-app-browser-notice .in-app-browser-notice-dismiss {
+    margin-top: 10px;
+    background: transparent;
+    color: #00685e;
+}

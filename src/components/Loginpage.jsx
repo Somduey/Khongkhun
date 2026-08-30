@@ -5,10 +5,26 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signInWithGoogle } from "../services/firebase";
 
+const isInAppBrowser = () =>
+  /FBAN|FBAV|Instagram|Line|TikTok|Bytedance/i.test(navigator.userAgent);
+
 export default function Loginpage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showInAppBrowserNotice, setShowInAppBrowserNotice] =
+    useState(isInAppBrowser);
+  const [copyStatus, setCopyStatus] = useState("");
   const navigate = useNavigate();
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopyStatus("คัดลอกลิงก์แล้ว");
+    } catch (clipboardError) {
+      console.error("Could not copy the login link", clipboardError);
+      setCopyStatus("ไม่สามารถคัดลอกลิงก์ได้ กรุณาคัดลอกจากแถบที่อยู่");
+    }
+  };
 
   const handleGoogleLogin = async () => {
     setError("");
@@ -19,6 +35,9 @@ export default function Loginpage() {
     } catch (authError) {
       console.error(authError);
       setError("ไม่สามารถสมัครด้วย Google ได้");
+      if (isInAppBrowser()) {
+        setShowInAppBrowserNotice(true);
+      }
     } finally {
       setLoading(false);
     }
@@ -89,6 +108,36 @@ export default function Loginpage() {
           {error && <p role="alert">{error}</p>}
         </div>
       </div>
+
+      {showInAppBrowserNotice && (
+        <div className="in-app-browser-notice-backdrop">
+          <section
+            className="in-app-browser-notice"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="in-app-browser-notice-title"
+          >
+            <h2 id="in-app-browser-notice-title">
+              โปรดเปิดในเบราว์เซอร์
+            </h2>
+            <p>
+              การเข้าสู่ระบบ Google อาจใช้ไม่ได้เมื่อเปิดจากแอปนี้
+              กรุณาเปิดลิงก์ใน Chrome (Android) หรือ Safari (iPhone) ก่อนดำเนินการต่อ
+            </p>
+            <button type="button" onClick={handleCopyLink}>
+              คัดลอกลิงก์
+            </button>
+            {copyStatus && <p className="copy-status" role="status">{copyStatus}</p>}
+            <button
+              type="button"
+              className="in-app-browser-notice-dismiss"
+              onClick={() => setShowInAppBrowserNotice(false)}
+            >
+              ดำเนินการต่อในหน้านี้
+            </button>
+          </section>
+        </div>
+      )}
     </>
   );
 }
