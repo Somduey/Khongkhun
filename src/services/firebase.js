@@ -10,9 +10,11 @@ import {
   signOut,
 } from "firebase/auth";
 
+const firebaseAuthDomain = "khongkhun-e6def.firebaseapp.com";
+
 const firebaseConfig = {
   apiKey: "AIzaSyBmHf7mKH846i87MsSZ7LngQ7pT5so7mmY",
-  authDomain: "khongkhun-e6def.firebaseapp.com",
+  authDomain: import.meta.env.DEV ? firebaseAuthDomain : window.location.host,
   projectId: "khongkhun-e6def",
   storageBucket: "khongkhun-e6def.firebasestorage.app",
   messagingSenderId: "260566796572",
