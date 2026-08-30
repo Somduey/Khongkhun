@@ -287,9 +287,3 @@ body{
     color: #00685e;
     font-size: 13px;
 }
-
-.in-app-browser-notice .in-app-browser-notice-dismiss {
-    margin-top: 10px;
-    background: transparent;
-    color: #00685e;
-}

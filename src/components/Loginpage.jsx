@@ -128,13 +128,6 @@ export default function Loginpage() {
               คัดลอกลิงก์
             </button>
             {copyStatus && <p className="copy-status" role="status">{copyStatus}</p>}
-            <button
-              type="button"
-              className="in-app-browser-notice-dismiss"
-              onClick={() => setShowInAppBrowserNotice(false)}
-            >
-              ดำเนินการต่อในหน้านี้
-            </button>
           </section>
         </div>
       )}
