@@ -1,15 +1,36 @@
 import "./SideBar.css";
 import Home from "../assets/home.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
-import { logOut } from "../services/firebase.js";
-import cog from "../assets/cog.svg";
+import { logOut, auth } from "../services/firebase.js";
+import { addPost } from "../services/supabase.js";
+import { onAuthStateChanged } from "firebase/auth";
 
-export default function SideBar() {
+export default function SideBar({
+  showPost,
+  onShowPostChange,
+  onPostCreated,
+}) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
-  const [showPost,setshowPost] = useState(false)
+  const [user, setUser] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [description, setDescription] = useState("");
+  const [postType, setPostType] = useState("lost");
+  const [uploading, setUploading] = useState(false);
+  const [profileImageFailed, setProfileImageFailed] = useState(false);
+  const profileInitial = user?.email?.charAt(0).toUpperCase() || "?";
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setProfileImageFailed(false);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handleSignOut = async () => {
     try {
@@ -24,16 +45,72 @@ export default function SideBar() {
     }
   };
 
-  function toggleValue(){
-    setShow(!show)
+  function toggleValue() {
+    setShow(!show);
   }
 
-  function showPostitem(){
-    setshowPost(!showPost)
+  function showPostitem() {
+    onShowPostChange(!showPost);
   }
+
+  const handleImageSelect = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setSelectedImage(null);
+    setImagePreview(null);
+  };
+
+  const handleSubmitPost = async () => {
+    if (!selectedImage || !description.trim()) {
+      alert("กรุณาเลือกรูปภาพและเขียนรายละเอียด");
+      return;
+    }
+
+    if (!user) {
+      alert("กรุณาเข้าสู่ระบบก่อน");
+      return;
+    }
+
+    try {
+      setUploading(true);
+
+      await addPost({
+        uid: user.uid,
+        email: user.email,
+        photoURL: user.photoURL,
+        postType,
+        imageFile: selectedImage,
+        description,
+      });
+
+      alert("โพสต์เสร็จแล้ว");
+
+      setSelectedImage(null);
+      setImagePreview(null);
+      setDescription("");
+      setPostType("lost");
+      onShowPostChange(false);
+      onPostCreated();
+    } catch (err) {
+      console.error("Upload failed", err);
+      alert("อัปโหลดไม่สำเร็จ");
+    } finally {
+      setUploading(false);
+    }
+  };
 
   return (
-    <aside className="maincontainer-sideL">
+    <aside id="sidebar" className="maincontainer-sideL">
       <div className="title-sideL">
         <img src={Home} alt="Home" />
         <div>
@@ -44,11 +121,23 @@ export default function SideBar() {
       <div className="menu-container">
         <p>เมนูหลัก</p>
         <ul>
-          <li className="menu" onClick={showPostitem}>โพสต์</li>
+          <li className="menu" onClick={showPostitem}>
+            โพสต์
+          </li>
         </ul>
       </div>
       <button className="option" onClick={toggleValue}>
-        <img src={cog} alt="" />
+        {user?.photoURL && !profileImageFailed ? (
+          <img
+            src={user.photoURL}
+            alt="Profile"
+            onError={() => setProfileImageFailed(true)}
+          />
+        ) : (
+          <span className="sidebar-profile-placeholder" aria-label="Profile">
+            {profileInitial}
+          </span>
+        )}
       </button>
 
       {/* เพิ่มเติม */}
@@ -59,12 +148,88 @@ export default function SideBar() {
           </button>
         </div>
       )}
-      
-      {showPost && (
-        <div className="post">
-          <h1 className="headText">โพสต์ของหาย</h1>
-        </div>
-      )}
+
+      {showPost && createPortal(
+        <>
+          <button
+            type="button"
+            className="post-backdrop"
+            onClick={() => onShowPostChange(false)}
+            aria-label="ปิดหน้าต่างโพสต์"
+          />
+          <div className="post" role="dialog" aria-modal="true" aria-label="สร้างโพสต์">
+            <h1 className="headText">โพสต์</h1>
+            <div className="addPicture">
+              <fieldset className="postTypeInput">
+                <legend>ประเภทประกาศ</legend>
+                <label>
+                  <input
+                    type="radio"
+                    name="postType"
+                    value="lost"
+                    checked={postType === "lost"}
+                    onChange={(event) => setPostType(event.target.value)}
+                  />
+                  แจ้งของหาย
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="postType"
+                    value="search"
+                    checked={postType === "search"}
+                    onChange={(event) => setPostType(event.target.value)}
+                  />
+                  หาของ
+                </label>
+              </fieldset>
+              <label htmlFor="imageInput">กรุณาเลือกรูปภาพ</label>
+              <input
+                id="imageInput"
+                type="file"
+                accept="image/*"
+                onChange={handleImageSelect}
+                style={{ display: "none" }}
+              />
+              <button
+                type="button"
+                onClick={() => document.getElementById("imageInput").click()}
+              >
+                เลือกรูป
+              </button>
+
+              {imagePreview && (
+                <div className="imagePreviewContainer">
+                  <img src={imagePreview} alt="Preview" />
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="removeBtn"
+                  >
+                    ลบ
+                  </button>
+                </div>
+              )}
+
+              <textarea
+                placeholder="เขียนรายละเอียด...หรือสถานที่รับของ"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="descriptionInput"
+              />
+
+              <button
+                type="button"
+                onClick={handleSubmitPost}
+                disabled={uploading}
+                className="submitBtn"
+              >
+                {uploading ? "กำลังส่ง..." : "ส่ง"}
+              </button>
+            </div>
+          </div>
+        </>
+      , document.body)}
     </aside>
   );
 }

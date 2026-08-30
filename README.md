@@ -1,4 +1,20 @@
-# React + Vite
+# KhongKhun
+
+แอปตามหาของหายด้วย React, Firebase Authentication และ Supabase
+
+## การตั้งค่า Supabase
+
+1. สร้างโปรเจกต์ Supabase แล้วคัดลอก Project URL กับ anon key ไปเพิ่มใน `.env`
+   ตามชื่อตัวแปรใน `.env.example`
+2. เปิด SQL Editor บน Supabase และรันเนื้อหาใน `supabase-schema.sql` หนึ่งครั้ง
+   เพื่อสร้าง table `users` และ Storage bucket `post-images`
+
+เมื่อผู้ใช้ส่งโพสต์ ระบบจะอัปโหลดรูปไปยัง Supabase Storage และบันทึก `uid`,
+`email`, รูปโปรไฟล์ Google, ประเภทประกาศ (`lost` หรือ `search`), URL รูป
+(`image_url`) และข้อความ `description` ลง table `users`
+
+หน้า List จะดึงข้อมูลจาก `users` และแสดงคอมเมนต์จาก table `comments` ซึ่งถูกสร้าง
+จาก `supabase-schema.sql` เช่นกัน
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

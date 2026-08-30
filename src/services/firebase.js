@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+
 import {
   createUserWithEmailAndPassword,
   getAuth,
@@ -19,18 +20,30 @@ const firebaseConfig = {
   measurementId: "G-57SN6ENC69",
 };
 
+
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 
-const provider = new GoogleAuthProvider();
-provider.setCustomParameters({ prompt: "select_account" });
 
-export const signInWithGoogle = () => signInWithPopup(auth, provider);
+const provider = new GoogleAuthProvider();
+
+provider.setCustomParameters({
+  prompt: "select_account"
+});
+
+
+export const signInWithGoogle = () =>
+  signInWithPopup(auth, provider);
+
 export const signIn = (email, password) =>
   signInWithEmailAndPassword(auth, email, password);
+
 export const signUp = (email, password) =>
   createUserWithEmailAndPassword(auth, email, password);
+
 export const observeAuthState = (callback) =>
   onAuthStateChanged(auth, callback);
-export const logOut = () => signOut(auth);
+
+export const logOut = () =>
+  signOut(auth);

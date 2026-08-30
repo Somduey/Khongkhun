@@ -41,7 +41,7 @@ body{
     background-color: rgba(212, 116, 64, 0.947);
     width: 40px;
     padding: 10px;
-    margin-bottom: 25px;
+    margin: 0px auto 25px;
     border-radius: 10px;
 }
 

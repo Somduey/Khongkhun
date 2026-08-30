@@ -3,11 +3,9 @@ import Home from "../assets/home.svg";
 import google from "../assets/google.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signIn, signInWithGoogle } from "../services/firebase";
+import { signInWithGoogle } from "../services/firebase";
 
 export default function Loginpage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();

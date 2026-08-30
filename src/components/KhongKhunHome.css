@@ -1,6 +1,77 @@
 @import "tailwindcss";
 
 .maincontainer-Khongkhun{
+    min-height: 100vh;
     display: flex;
     overflow: hidden;
+    background-color: #f5f8f7;
+}
+
+.sideBarMain {
+    flex: 0 0 300px;
+}
+
+.listMain {
+    flex: 1;
+    min-width: 0;
+}
+
+.sidebar-toggle,
+.sidebar-backdrop {
+    display: none;
+}
+
+@media (max-width: 800px) {
+    .maincontainer-Khongkhun {
+        display: block;
+        overflow: visible;
+    }
+
+    .sideBarMain {
+        position: fixed;
+        z-index: 20;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 300px;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease-in-out;
+    }
+
+    .sideBarMain.sidebar-open {
+        transform: translateX(0);
+    }
+
+    .sidebar-toggle {
+        position: fixed;
+        z-index: 30;
+        top: 16px;
+        left: 16px;
+        display: grid;
+        width: 44px;
+        height: 44px;
+        place-items: center;
+        border: 0;
+        border-radius: 10px;
+        background: #00685e;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.24);
+        cursor: pointer;
+    }
+
+    .sidebar-toggle img {
+        width: 24px;
+        height: 24px;
+        filter: brightness(0) invert(1);
+    }
+
+    .sidebar-backdrop {
+        position: fixed;
+        z-index: 15;
+        inset: 0;
+        display: block;
+        width: 100%;
+        border: 0;
+        background: rgba(0, 0, 0, 0.38);
+        cursor: pointer;
+    }
 }
