@@ -8,6 +8,7 @@ export default function KhongKhunHome() {
   const [postVersion, setPostVersion] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showPost, setShowPost] = useState(false);
+  const [postFilter, setPostFilter] = useState(null);
 
   return (
     <div className="maincontainer-Khongkhun">
@@ -37,10 +38,12 @@ export default function KhongKhunHome() {
           showPost={showPost}
           onShowPostChange={setShowPost}
           onPostCreated={() => setPostVersion((version) => version + 1)}
+          postFilter={postFilter}
+          onPostFilterChange={setPostFilter}
         />
       </div>
       <div className="listMain">
-        <List postVersion={postVersion} />
+        <List postVersion={postVersion} postFilter={postFilter} />
       </div>
     </div>
   );

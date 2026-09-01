@@ -17,7 +17,7 @@ const formatDate = (date) =>
 
 const getProfileInitial = (email) => email?.charAt(0).toUpperCase() || "?";
 
-export default function List({ postVersion }) {
+export default function List({ postVersion, postFilter }) {
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [commentsByPost, setCommentsByPost] = useState({});
@@ -26,6 +26,7 @@ export default function List({ postVersion }) {
   const [error, setError] = useState("");
   const [submittingPostId, setSubmittingPostId] = useState(null);
   const [selectedPostId, setSelectedPostId] = useState(null);
+  const [selectedImageUrl, setSelectedImageUrl] = useState(null);
   const [failedProfileImages, setFailedProfileImages] = useState({});
   const [deletingPostId, setDeletingPostId] = useState(null);
 
@@ -139,24 +140,31 @@ export default function List({ postVersion }) {
   const selectedComments = selectedPost
     ? commentsByPost[selectedPost.id] || []
     : [];
+  const filteredPosts = postFilter
+    ? posts.filter((post) => post.post_type === postFilter)
+    : posts;
 
   return (
     <main className="post-list">
       <h1>รายการประกาศ</h1>
       <p className="post-list-description">
-        ดูรายการของหายและประกาศหาของจากผู้ใช้ทั้งหมด
+        ดูประกาศตามหาของและตามหาเจ้าของจากผู้ใช้ทั้งหมด
       </p>
       {error && <p className="post-list-error" role="alert">{error}</p>}
       {loading ? (
         <p className="post-list-loading">กำลังโหลดรายการ...</p>
-      ) : posts.length === 0 ? (
+      ) : filteredPosts.length === 0 ? (
         <section className="empty-post-list" aria-label="รายการโพสต์">
-          <h2>ยังไม่มีรายการประกาศ</h2>
-          <p>กดเมนู “โพสต์” ทางด้านซ้ายเพื่อเพิ่มรายการใหม่</p>
+          <h2>{postFilter ? "ยังไม่มีประกาศประเภทนี้" : "ยังไม่มีรายการประกาศ"}</h2>
+          <p>
+            {postFilter
+              ? "ลองเลือกตัวกรองอีกประเภท หรือกดเมนู “โพสต์” เพื่อเพิ่มรายการใหม่"
+              : "กดเมนู “โพสต์” ทางด้านซ้ายเพื่อเพิ่มรายการใหม่"}
+          </p>
         </section>
       ) : (
         <section className="post-cards" aria-label="รายการโพสต์">
-          {posts.map((post) => {
+          {filteredPosts.map((post) => {
             const isOwner = user?.uid === post.uid;
             const comments = commentsByPost[post.id] || [];
 
@@ -188,7 +196,9 @@ export default function List({ postVersion }) {
                     <time dateTime={post.created_at}>{formatDate(post.created_at)}</time>
                   </div>
                   <span className={`post-type post-type-${post.post_type}`}>
-                    {post.post_type === "lost" ? "แจ้งของหาย" : "หาของ"}
+                    {post.post_type === "lost"
+                      ? "ตามหาของ"
+                      : "ตามหาเจ้าของ"}
                   </span>
                   {isOwner && (
                     <button
@@ -202,11 +212,18 @@ export default function List({ postVersion }) {
                   )}
                 </header>
 
-                <img
-                  className="post-image"
-                  src={post.image_url}
-                  alt="รูปภาพประกอบประกาศ"
-                />
+                <button
+                  type="button"
+                  className="post-image-button"
+                  onClick={() => setSelectedImageUrl(post.image_url)}
+                  aria-label="ดูรูปภาพประกอบประกาศแบบเต็มขนาด"
+                >
+                  <img
+                    className="post-image"
+                    src={post.image_url}
+                    alt="รูปภาพประกอบประกาศ"
+                  />
+                </button>
                 <p className="post-description">{post.description}</p>
                 <button
                   type="button"
@@ -298,6 +315,19 @@ export default function List({ postVersion }) {
               </button>
             </form>
           </section>
+        </div>
+      )}
+
+      {selectedImageUrl && (
+        <div
+          className="image-lightbox"
+          role="presentation"
+          onClick={() => setSelectedImageUrl(null)}
+        >
+          <img
+            src={selectedImageUrl}
+            alt="รูปภาพประกอบประกาศแบบเต็มขนาด"
+          />
         </div>
       )}
     </main>

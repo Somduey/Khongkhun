@@ -11,6 +11,8 @@ export default function SideBar({
   showPost,
   onShowPostChange,
   onPostCreated,
+  postFilter,
+  onPostFilterChange,
 }) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -125,6 +127,24 @@ export default function SideBar({
             โพสต์
           </li>
         </ul>
+        <div className="post-filter-menu" aria-label="กรองประเภทประกาศ">
+          <button
+            type="button"
+            className={postFilter === "lost" ? "active" : ""}
+            onClick={() => onPostFilterChange("lost")}
+            aria-pressed={postFilter === "lost"}
+          >
+            ตามหาของ
+          </button>
+          <button
+            type="button"
+            className={postFilter === "search" ? "active" : ""}
+            onClick={() => onPostFilterChange("search")}
+            aria-pressed={postFilter === "search"}
+          >
+            ตามหาเจ้าของ
+          </button>
+        </div>
       </div>
       <button className="option" onClick={toggleValue}>
         {user?.photoURL && !profileImageFailed ? (
@@ -161,7 +181,7 @@ export default function SideBar({
             <h1 className="headText">โพสต์</h1>
             <div className="addPicture">
               <fieldset className="postTypeInput">
-                <legend>ประเภทประกาศ</legend>
+                <legend>ฉันต้องการ...</legend>
                 <label>
                   <input
                     type="radio"
@@ -170,7 +190,7 @@ export default function SideBar({
                     checked={postType === "lost"}
                     onChange={(event) => setPostType(event.target.value)}
                   />
-                  แจ้งของหาย
+                  ตามหาของ
                 </label>
                 <label>
                   <input
@@ -180,7 +200,7 @@ export default function SideBar({
                     checked={postType === "search"}
                     onChange={(event) => setPostType(event.target.value)}
                   />
-                  หาของ
+                  ตามหาเจ้าของ
                 </label>
               </fieldset>
               <label htmlFor="imageInput">กรุณาเลือกรูปภาพ</label>

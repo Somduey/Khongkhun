@@ -60,21 +60,34 @@
     padding: 0px;
 }
 
-.menu-container li{
+.menu-container li,
+.post-filter-menu button {
     padding: 10px;
+    border: 1px solid #a7d8c7;
     border-radius: 10px;
-    margin: 10px 0px;
-    background-color: white;
-    color: #00685e;
-    box-shadow: 1px 1px 10px 1px rgb(30, 61, 52);
-    cursor: pointer;
+    background: transparent;
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
     transition: all 0.3s ease-in-out;
     text-align: center;
 }
 
-.menu-container li:hover{
-    background-color: #cacaca;
-    color: #070b0b;
+.menu-container li {
+    margin: 10px 0;
+}
+
+.post-filter-menu {
+    display: grid;
+    gap: 10px;
+}
+
+.menu-container li:hover,
+.post-filter-menu button:hover,
+.post-filter-menu button.active {
+    border-color: #fff;
+    background: #fff;
+    color: #00685e;
 }
 
 .bottom-menu{
