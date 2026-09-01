@@ -130,6 +130,14 @@ export default function SideBar({
         <div className="post-filter-menu" aria-label="กรองประเภทประกาศ">
           <button
             type="button"
+            className={postFilter === null ? "active" : ""}
+            onClick={() => onPostFilterChange(null)}
+            aria-pressed={postFilter === null}
+          >
+            แสดงทั้งหมด
+          </button>
+          <button
+            type="button"
             className={postFilter === "lost" ? "active" : ""}
             onClick={() => onPostFilterChange("lost")}
             aria-pressed={postFilter === "lost"}
